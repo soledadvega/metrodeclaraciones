@@ -39,7 +39,18 @@ class UpdateView(BaseView, edit.UpdateView):
 
 class DeclaracionHTML(generic.DetailView):
     model = Declaracion
-    template_name = 'declaracion/declaracion.html'
+
+    def get_template_names(self):
+        objeto = self.get_object()
+        if objeto.opciones_plantilla == 'Soledad':
+            return ['declaracion/declaracion2.html']
+        else:
+            return ['declaracion/declaracion.html']
+
+
+
+
+
 
 
 class DeclaracionPDF(WeasyTemplateResponseMixin, DeclaracionHTML):
@@ -47,4 +58,6 @@ class DeclaracionPDF(WeasyTemplateResponseMixin, DeclaracionHTML):
 
 
 class DeclaracionPNG(DeclaracionPDF):
-    content_type = 'image/png'
+    '''
+    content_type = 'image/png' #sacamos
+    '''

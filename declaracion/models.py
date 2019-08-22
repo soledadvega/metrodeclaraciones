@@ -9,6 +9,7 @@ from trix.fields import TrixField
 
 class Declaracion(models.Model):
     ESTADOS = Choices('borrador', 'publicado')
+    CHOICE_PLANTILLA = Choices('Soledad', 'Default')
     fecha_publicacion = MonitorField(monitor='estado', when=['publicado'], editable=False)
     cargado_por = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
     título = models.CharField(max_length=100)
@@ -18,9 +19,10 @@ class Declaracion(models.Model):
     estado = StatusField(choices_name='ESTADOS')
     nota_interna = models.TextField(blank=True, null=True)
 
+    opciones_plantilla = StatusField(choices_name = 'CHOICE_PLANTILLA')
+
     def get_absolute_url(self):
         return reverse('update', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ('estado', '-fecha', '-id')
-
